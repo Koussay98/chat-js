@@ -1,0 +1,21 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "A Simple RabbitMQ/Node Chat Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CraigDMcKenna/chat-app.git"
+  },
+  "author": "Craig McKenna",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "latest",
+    "body-parser": "latest",
+    "express": "latest",
+    "socket.io": "latest"
+  }
+}
