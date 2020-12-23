@@ -54,4 +54,5 @@ $('#chatForm').on('submit', function(e) {
     processData: false,
     data: data
   })
+  console.log("sucess");
 })
