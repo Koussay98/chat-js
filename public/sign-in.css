@@ -6,7 +6,7 @@
 }
 
 body {
-	background: #211d25;
+	background: #312b38;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -18,18 +18,17 @@ body {
 /*** Navbar ***/
 
 nav{
-	background-color: #fa4160 !important;
+	background: rgb(141,114,172);
+	background: linear-gradient(90deg, rgba(141,114,172,1) 0%, rgba(255,102,127,1) 50%, rgba(141,114,172,1) 100%);
 	position: fixed;
 	top: 0;
 	
 }
-.orangee{
-	background-color: rgb(253, 87, 71) !important;
-}
+
 nav div img{
 	position: relative;
 	left: 48%;
-	color: #211d25;
+	color: #312b38;
 	height: 50px;
 	width: 50px;
 	margin-top: 5px;
@@ -66,8 +65,8 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border: 1px solid #fff;
+	background: rgb(141,114,172);
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -186,8 +185,8 @@ input {
 
 .overlay {
 	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background: rgb(141,114,172);
+	background: linear-gradient(90deg, rgba(141,114,172,1) 0%, rgba(255,102,127,1) 50%, rgba(141,114,172,1) 100%);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;

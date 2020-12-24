@@ -8,6 +8,7 @@ var io = require('socket.io')(server)
 let onlineUsers = {}
 
 var chat = io.of('/chat')
+
 chat.on("connection", (socket => {
   onlineUsers[socket.id] = ""
   socket.on("user-connected", (username) => {

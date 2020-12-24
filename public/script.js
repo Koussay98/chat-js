@@ -10,7 +10,7 @@ chatSocket.on('user-connected', function (onlineUsers) {
     const userCircle = `<li class="active">
     <div class="d-flex bd-highlight">
       <div class="img_cont">
-        <img src="user-alt-solid.svg" class="rounded-circle user_img">
+        <img src="profile.svg" class="rounded-circle user_img">
         <span class="online_icon"></span>
       </div>
       <div class="user_info">
@@ -29,7 +29,6 @@ $('#name').val(name)
 $(document).ready(function () {
 
   getMessages();
-  // $('#modal').modal('show')
 })
 $("#logout").on("click", (e) => {
   name = "";
@@ -38,12 +37,7 @@ $("#logout").on("click", (e) => {
 })
 
 
-$('#chatNameForm').on('submit', function (e) {
-  e.preventDefault()
-  // var name = $('#chatName').val() //hook this
-  $('#name').val(name)
-  getMessages()
-})
+
 
 function updateFeed(message, method) {
   let newMessage;
@@ -54,13 +48,13 @@ function updateFeed(message, method) {
     </div>
     <span style="align-self:center;">${message.name}</span>
     <div class="img_cont_msg">
-    <img src="user-alt-solid.svg" class="rounded-circle user_img_msg">
+    <img src="profile.svg" class="rounded-circle user_img_msg">
     </div>
     </div>`
   else
     newMessage = `<div class="d-flex justify-content-start py-2">
         <div class="img_cont_msg">
-          <img src="user-alt-solid.svg" class="rounded-circle user_img_msg">
+          <img src="profile.svg" class="rounded-circle user_img_msg">
         </div>
         <span style="align-self:center;">${message.name}</span>
         <div class="msg_cotainer">

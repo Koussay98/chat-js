@@ -2,13 +2,8 @@ body,
 html {
   height: 100%;
   margin: 0;
-  background: rgb(253, 87, 71);
-  background: linear-gradient(
-    90deg,
-    rgba(253, 87, 71, 1) 0%,
-    rgba(255, 70, 76, 1) 33%,
-    rgba(255, 65, 107, 1) 66%
-  );
+  background: rgb(141,114,172);
+background: linear-gradient(90deg, rgba(141,114,172,1) 0%, rgba(255,102,127,1) 50%, rgba(141,114,172,1) 100%);
 }
 
 .chat {
@@ -36,7 +31,7 @@ html {
   font-size: 25px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
-  color: #211d25;
+  color: #fff;
 }
 
 .card-footer {
@@ -136,7 +131,7 @@ html {
   margin-left: 15px;
 }
 .user_info span {
-  color: #000;
+  color: #fff;
   font-size: 22px;
   font-weight: 500;
 }
