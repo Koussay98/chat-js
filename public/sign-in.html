@@ -1,60 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="sign-in.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
-  <title>Chat</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</head>
-<body>
-  <nav id="navbar">
-    <div class="nav-wrapper">
-      <img src="comments-solid.svg" alt="">
-    </div>
-  </nav>
-  <div class="ctn" id="ctn">
-    <div class="form-ctn sign-up-ctn">
-      <form action="#">
-        <h1>Create Account</h1>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder=" Confirm password" />
-        <button>Sign Up</button>
-      </form>
-    </div>
-    <div class="form-ctn sign-in-ctn">
-      <form action="#">
-        <h1>Sign in</h1>
-        <br>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
-      </form>
-    </div>
-    <div class="overlay-ctn">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <h1>Welcome Back!</h1>
-          <p>To keep connected with us please login with your personal info</p>
-          <button class="ghost" id="signIn">Sign In</button>
-        </div>
-        <div class="overlay-panel overlay-right">
-          <h1>Hello, Friend!</h1>
-          <p>Enter your personal details and start journey with us</p>
-          <button class="ghost" id="signUp">Sign Up</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sign-in.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    />
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="nav-wrapper">
+        <img src="comments-solid.svg" alt="" />
+      </div>
+    </nav>
+    <div class="ctn" id="ctn">
+      <div class="form-ctn sign-up-ctn">
+        <form action="#">
+          <h1>Create Account</h1>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <input type="password" placeholder=" Confirm password" />
+          <button>Sign Up</button>
+        </form>
+      </div>
+      <div class="form-ctn sign-in-ctn">
+        <form id="signin-form" action="#">
+          <h1>Sign in</h1>
+          <br />
+          <input type="text" placeholder="Username" name="username" />
+          <input type="password" placeholder="Password" name="password" />
+          <a href="#">Forgot your password?</a>
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-ctn">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <footer>
-    
-  </footer>
-  <script src="sign-in.js"></script>
-</body>
+    <footer></footer>
+
+    <script src="sign-in.js"></script>
+  </body>
 </html>
