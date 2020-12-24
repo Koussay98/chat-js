@@ -5,9 +5,23 @@ var app = express()
 var router = express.Router()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
-
+let onlineUsers = {}
 
 var chat = io.of('/chat')
+chat.on("connection", (socket => {
+  onlineUsers[socket.id] = ""
+  socket.on("user-connected", (username) => {
+    onlineUsers[socket.id] = username
+    chat.emit('user-connected', onlineUsers)
+
+  })
+  socket.on('disconnecting', () => {
+    delete onlineUsers[socket.id]
+    chat.emit('user-connected', onlineUsers)
+
+
+  });
+}))
 
 rabbitConn(function (conn) {
   conn.createChannel(function (err, ch) {
