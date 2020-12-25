@@ -16,6 +16,8 @@
     "amqplib": "latest",
     "body-parser": "latest",
     "express": "latest",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
     "socket.io": "latest"
   }
 }

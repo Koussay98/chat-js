@@ -6,9 +6,8 @@ var router = express.Router()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 let onlineUsers = {}
-
 var chat = io.of('/chat')
-
+const User = require("./User")
 chat.on("connection", (socket => {
   onlineUsers[socket.id] = ""
   socket.on("user-connected", (username) => {
@@ -47,7 +46,7 @@ rabbitConn(function (conn) {
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/api', router)
+app.use(bodyParser.json())
 router.route('/chat')
 
   .post(function (req, res) {
@@ -106,6 +105,54 @@ router.route('/chat')
       }, { noAck: true })
     })
   })
+router.get("/users/online", async (req, res) => {
+  const onlineUsers = await User.findAll({
+    attributes: ['username'],
+    where: {
+      status: "online"
+    }
+  });
+  res.send(onlineUsers)
+})
+router.put("/users/:username", async (req, res) => {
+  const { status } = req.body
+  console.log(req.params);
+  if (status !== "online" && status !== "offline")
+    return res.sendStatus(400)
+  await User.update({
+    status
+  }, {
+    where: {
+      username: req.params.username
+    }
+  });
+  res.sendStatus(200)
+})
+router.post("/users", async (req, res) => {
+  try {
+    const user = await User.create(req.body)
+    return res.send(user)
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(500)
+  }
+})
+router.post("/users/login", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) return res.sendStatus(400);
+  const user = await User.findAll({
+    where: {
+      username
+    }
+  });
+  if (!user) return res.status(400).send({ error: "No such user found" })
+  if (user[0].password !== password) return res.status(400).send({ error: "verify your credentials" })
+  user[0].status = "online";
+  await user[0].save();
+  res.send({ username: user[0].username })
+})
+
+app.use('/api', router)
 
 server.listen(3030, '0.0.0.0',
   function () {
