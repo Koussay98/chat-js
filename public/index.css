@@ -98,6 +98,7 @@ background: linear-gradient(90deg, rgba(141,114,172,1) 0%, rgba(255,102,127,1) 5
 .user_img {
   height: 70px;
   width: 70px;
+
 }
 .user_img_msg {
   height: 40px;
@@ -111,6 +112,7 @@ background: linear-gradient(90deg, rgba(141,114,172,1) 0%, rgba(255,102,127,1) 5
 .img_cont_msg {
   height: 40px;
   width: 40px;
+  margin : 0 5px 0 5px;
 }
 .online_icon {
   position: absolute;

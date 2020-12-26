@@ -1,39 +1,45 @@
 var name = localStorage.getItem("name");
 if (!name || name === "null") window.location.replace("/sign-in.html")
 var chatSocket = io('/chat')
-chatSocket.emit('user-connected', name);
+// chatSocket.emit('user-connected', name);
+// chatSocket.on('user-connected', function (onlineUsers) {
+//   const names = Object.values(onlineUsers)
+//   $(".contacts").html("")
+//   names.forEach(name => {
+//     const userCircle = `<li class="active">
+//     <div class="d-flex bd-highlight">
+//       <div class="img_cont">
+//         <img src="profile.svg" class="rounded-circle user_img">
+//         <span class="online_icon"></span>
+//       </div>
+//       <div class="user_info">
+//         <span>${name} </span>
+//         <p>${name} is online</p>
+//       </div>
+//     </div>
+//   </li>`
+//     $(".contacts").append(userCircle)
 
-chatSocket.on('user-connected', function (onlineUsers) {
-  const names = Object.values(onlineUsers)
-  $(".contacts").html("")
-  names.forEach(name => {
-    const userCircle = `<li class="active">
-    <div class="d-flex bd-highlight">
-      <div class="img_cont">
-        <img src="profile.svg" class="rounded-circle user_img">
-        <span class="online_icon"></span>
-      </div>
-      <div class="user_info">
-        <span>${name} </span>
-        <p>${name} is online</p>
-      </div>
-    </div>
-  </li>`
-    $(".contacts").append(userCircle)
+//   })
 
-  })
-
-})
+// })
 $('#name').val(name)
 
 $(document).ready(function () {
-
   getMessages();
+  getOnlineUsers();
 })
-$("#logout").on("click", (e) => {
-  name = "";
+$("#logout").on("click", async(e) => {
+    // name = "";
+
   localStorage.setItem("name", "")
-  window.location.replace("/sign-in.html")
+    const res = await fetch(`/api/users/${name} `, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({status:"offline"})
+    })
+    if(res.status=="200")   window.location.replace("/sign-in.html")
+
 })
 
 
@@ -96,7 +102,30 @@ function getMessages() {
     }
   })
 }
+async function getOnlineUsers () {
+  console.log("getting online users")
+const res = await fetch("/api/users/online")
+const users = await res.json()
+  $(".contacts").html("")
 
+users.forEach(user => {
+      const userCircle = `<li class="active">
+     <div class="d-flex bd-highlight">
+       <div class="img_cont">
+         <img src="profile.svg" class="rounded-circle user_img">
+         <span class="online_icon"></span>
+       </div>
+       <div class="user_info">
+         <span>${user.username} </span>
+         <p>${user.username} is online</p>
+       </div>
+     </div>
+   </li>`
+    $(".contacts").append(userCircle)
+
+});
+
+}
 $('#chatForm').on('submit', function (e) {
   e.preventDefault()
   var data = $('#chatForm').serialize()
@@ -108,3 +137,5 @@ $('#chatForm').on('submit', function (e) {
   })
   $("#message").val("")
 })
+
+setInterval(function(){ getOnlineUsers() }, 1000);

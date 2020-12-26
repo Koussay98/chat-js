@@ -138,6 +138,7 @@ router.post("/users", async (req, res) => {
   }
 })
 router.post("/users/login", async (req, res) => {
+  console.log(req.body)
   const { username, password } = req.body;
   if (!username || !password) return res.sendStatus(400);
   const user = await User.findAll({
@@ -145,7 +146,7 @@ router.post("/users/login", async (req, res) => {
       username
     }
   });
-  if (!user) return res.status(400).send({ error: "No such user found" })
+  if (!user[0]) return res.status(400).send({ error: "No such user found" })
   if (user[0].password !== password) return res.status(400).send({ error: "verify your credentials" })
   user[0].status = "online";
   await user[0].save();
