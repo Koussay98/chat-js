@@ -1,6 +1,11 @@
 var name = localStorage.getItem("name");
 if (!name || name === "null") window.location.replace("/sign-in.html")
 var chatSocket = io('/chat')
+chatSocket.on('chat', function (message) {
+  console.log(message);
+  if (message.startsWith('"')) message = JSON.parse(message);
+  updateFeed(message, 'append')
+})
 // chatSocket.emit('user-connected', name);
 // chatSocket.on('user-connected', function (onlineUsers) {
 //   const names = Object.values(onlineUsers)
@@ -29,16 +34,16 @@ $(document).ready(function () {
   getMessages();
   getOnlineUsers();
 })
-$("#logout").on("click", async(e) => {
-    // name = "";
+$("#logout").on("click", async (e) => {
+  // name = "";
 
   localStorage.setItem("name", "")
-    const res = await fetch(`/api/users/${name} `, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({status:"offline"})
-    })
-    if(res.status=="200")   window.location.replace("/sign-in.html")
+  const res = await fetch(`/api/users/${name} `, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: "offline" })
+  })
+  if (res.status == "200") window.location.replace("/sign-in.html")
 
 })
 
@@ -47,12 +52,15 @@ $("#logout").on("click", async(e) => {
 
 function updateFeed(message, method) {
   let newMessage;
-  if (message.name == name)
+  const parts = message.split(":");
+  const sender = parts[0];
+  const msg = parts[1];
+  if (sender == name)
     newMessage = `<div class="d-flex justify-content-end py-2 ">
     <div class="msg_cotainer_send"} >
-      ${message.message}
+      ${msg}
     </div>
-    <span style="align-self:center;">${message.name}</span>
+    <span style="align-self:center;">${sender}</span>
     <div class="img_cont_msg">
     <img src="profile.svg" class="rounded-circle user_img_msg">
     </div>
@@ -62,9 +70,9 @@ function updateFeed(message, method) {
         <div class="img_cont_msg">
           <img src="profile.svg" class="rounded-circle user_img_msg">
         </div>
-        <span style="align-self:center;">${message.name}</span>
+        <span style="align-self:center;">${sender}</span>
         <div class="msg_cotainer">
-        ${message.message}
+        ${msg}
         </div>
       </div>`
 
@@ -81,35 +89,35 @@ function updateFeed(message, method) {
 }
 
 function getMessages() {
-  $.ajax({
-    type: 'GET',
-    dataType: 'json',
-    url: '/api/chat',
-    success: function (response) {
-      if (response.messages) {
-        response.messages.reverse().map(function (message) {
-          updateFeed(message, 'prepend')
+  try {
+    $.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: '/api/chat',
+      success: function (response) {
+        if (response.messages) {
+          response.messages.reverse().map(function (message) {
+            updateFeed(message, 'prepend')
+            $('#modal').modal('hide')
+          })
+        } else {
           $('#modal').modal('hide')
-        })
-      } else {
-        $('#modal').modal('hide')
-      }
+        }
 
-      chatSocket.on('chat', function (message) {
-        message = JSON.parse(message)
-        updateFeed(message, 'append')
-      })
-    }
-  })
+
+      }
+    })
+  } catch (error) {
+    console.log(error);
+  }
 }
-async function getOnlineUsers () {
-  console.log("getting online users")
-const res = await fetch("/api/users/online")
-const users = await res.json()
+async function getOnlineUsers() {
+  const res = await fetch("/api/users/online")
+  const users = await res.json()
   $(".contacts").html("")
 
-users.forEach(user => {
-      const userCircle = `<li class="active">
+  users.forEach(user => {
+    const userCircle = `<li class="active">
      <div class="d-flex bd-highlight">
        <div class="img_cont">
          <img src="profile.svg" class="rounded-circle user_img">
@@ -123,7 +131,7 @@ users.forEach(user => {
    </li>`
     $(".contacts").append(userCircle)
 
-});
+  });
 
 }
 $('#chatForm').on('submit', function (e) {
@@ -138,4 +146,4 @@ $('#chatForm').on('submit', function (e) {
   $("#message").val("")
 })
 
-setInterval(function(){ getOnlineUsers() }, 1000);
+// setInterval(function () { getOnlineUsers() }, 1000);

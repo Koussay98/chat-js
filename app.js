@@ -57,13 +57,13 @@ router.route('/chat')
         }
         var ex = 'chat_ex'
         var q = 'chat_q'
-        var msg = JSON.stringify(req.body)
-
+        var msg = JSON.stringify(`${req.body.name}:${req.body.message}`)
         ch.assertExchange(ex, 'fanout', { durable: false })
         ch.publish(ex, '', new Buffer.from(msg), { persistent: false })
         ch.assertQueue(q, { durable: true })
         ch.sendToQueue(q, new Buffer.from(msg), { persistent: true })
         ch.close(function () { conn.close() })
+        return res.send(msg)
       })
     })
   })
