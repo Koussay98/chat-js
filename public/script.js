@@ -88,28 +88,17 @@ function updateFeed(message, method) {
 
 }
 
-function getMessages() {
-  try {
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: '/api/chat',
-      success: function (response) {
-        if (response.messages) {
-          response.messages.reverse().map(function (message) {
-            updateFeed(message, 'prepend')
-            $('#modal').modal('hide')
-          })
-        } else {
-          $('#modal').modal('hide')
-        }
+async function getMessages() {
+  const res = await fetch("/api/chat");
+  const data = await res.json();
+  console.log(data);
+  if (data.messages) {
 
-
-      }
+    data.messages.reverse().map(function (message) {
+      updateFeed(message, 'prepend')
     })
-  } catch (error) {
-    console.log(error);
   }
+
 }
 async function getOnlineUsers() {
   const res = await fetch("/api/users/online")
@@ -146,4 +135,4 @@ $('#chatForm').on('submit', function (e) {
   $("#message").val("")
 })
 
-// setInterval(function () { getOnlineUsers() }, 1000);
+setInterval(function () { getOnlineUsers() }, 1000);
